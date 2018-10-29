@@ -17,6 +17,7 @@
     "http": "^0.0.0",
     "identicon": "^2.1.2",
     "mongoose": "^5.3.7",
+    "mongoose-sequence": "^4.0.1",
     "nodemailer": "^4.6.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

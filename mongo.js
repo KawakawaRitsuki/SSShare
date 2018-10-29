@@ -3,15 +3,19 @@ const db = require('mongoose'),
   Schema = db.Schema
 
 db.connect(`mongodb://${config.get('server.mongo')}/ssshare`, { useNewUrlParser: true })
+const autoinc = require('mongoose-sequence')(db)
 
-const User = db.model('User', {
-  name: String,
+const UserSchema = new Schema({
+  username: String,
   email: String,
   password: String,
-  iconPath: String,
+  icon_path: String,
   confirm_token: String,
-  isConfirmed: Boolean
+  id: Number
 })
+
+UserSchema.plugin(autoinc, { inc_field: 'id'})
+const User = db.model('User',UserSchema)
 
 module.exports.db = db
 module.exports.User = User

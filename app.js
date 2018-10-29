@@ -36,7 +36,7 @@ const server = app.listen(config.get("server.port") || 3000, () => {
 })
 
 const root = require('./routes/root')(),
-  user = require('./routes/user')(passport)
+  account = require('./routes/account')(passport)
 
 app.use("/",root)
-app.use("/user",user)
+app.use("/account",account)

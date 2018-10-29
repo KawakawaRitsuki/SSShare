@@ -1,5 +1,5 @@
 nav {
-  background: #666;
+  background: #666 !important;
   a {
     color: #fff !important;
     &:hover {
@@ -15,6 +15,12 @@ nav {
       fill: #FFF;
       transition: .1s ease-in-out;
       transition-property: fill;
+    }
+  }
+  .uk-navbar-dropdown-nav li a {
+    color: #999 !important;
+    &:hover {
+    color: #666 !important;
     }
   }
 }
