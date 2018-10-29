@@ -1,0 +1,13 @@
+html
+  head
+    include /_head
+    link(rel="stylesheet", href="/login.css")
+  body
+    include /_header
+    div(style="margin: calc((100vh - 209px - 80px - 24px) / 2) auto;").form-wrapper
+      div.login
+        div.uk-navbar-item.uk-logo
+          include /svgs/ssshare.svg
+        hr
+        div アカウントの登録が完了しました。
+    include /_footer

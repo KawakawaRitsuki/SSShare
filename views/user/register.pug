@@ -1,0 +1,134 @@
+html
+  head
+    include /_head
+    link(rel="stylesheet", href="/login.css")
+    script(type="text/javascript").
+      window.onload = () => {
+        const form = document.getElementsByClassName('form-wrapper')[0];
+
+        const un_input = document.getElementById('un-input');
+        const pw_input = document.getElementById('pw-input')
+        const cf_input = document.getElementById('cf-input')
+
+        const un_icon = document.getElementById('un-icon')
+        const pw_lower_icon = document.getElementById('pw-lower-icon')
+        const pw_upper_icon = document.getElementById('pw-upper-icon')
+        const pw_num_icon = document.getElementById('pw-num-icon')
+        const pw_min_icon = document.getElementById('pw-min-icon')
+        const cf_icon = document.getElementById('cf-icon')
+
+        const submit = document.getElementById('submit')
+
+        un_input.onchange = all; un_input.onkeyup = all
+        pw_input.onchange = all; pw_input.onkeyup = all
+        cf_input.onchange = all; cf_input.onkeyup = all
+
+        un_input.onfocus = focus; un_input.onblur = blur
+        pw_input.onfocus = focus; pw_input.onblur = blur
+        cf_input.onfocus = focus; cf_input.onblur = blur
+
+        function all(){
+          let stat = true;
+          stat = check(un_input,un_icon,/.{3,}/g) ? stat : false
+          stat = check(pw_input,pw_lower_icon,/[a-z]/g) ? stat : false
+          stat = check(pw_input,pw_upper_icon,/[A-Z]/g) ? stat : false
+          stat = check(pw_input,pw_num_icon,/[0-9]/g) ? stat : false
+          stat = check(pw_input,pw_min_icon,/.{8,}/g) ? stat : false
+          stat = check(pw_input,cf_icon, new RegExp(`^${cf_input.value}$`,"g")) ? stat : false
+          submit.disabled = !stat
+        }
+
+        function check(target,icon,pattern){
+          if(target.value.match(pattern)) {
+            icon.setAttribute('uk-icon','icon: check; ratio: 1.5')
+            icon.style = 'margin-right: 4px;color: #6fdb74;'
+            return true
+          } else {
+            icon.setAttribute('uk-icon',"icon: close; ratio: 1.5")
+            icon.style = 'margin-right: 4px;color: #db6f6f;'
+            return false
+          }
+        }
+
+        function focus(e) {
+          document.getElementById(`${e.target.id}-cond`).classList.remove('hidden')
+          resize()
+        }
+
+        function blur(e){
+          document.getElementById(`${e.target.id}-cond`).classList.add('hidden')
+          resize()
+        }
+
+        function resize() {
+          form.style.margin = `calc((100vh - ${form.offsetHeight}px - 80px - 24px) / 2) auto`
+          if(window.innerHeight - form.offsetHeight - 80 - 24 < 0) form.style.margin = `0 auto`
+        }
+
+        window.addEventListener('resize',resize)
+
+        all()
+      }
+
+    style(type="text/css").
+      .cond-box {
+        margin: 16px;
+      }
+      .hidden {
+        display: none;
+      }
+
+  body
+    include /_header
+    div(style="margin: calc((100vh - 509px - 80px - 24px) / 2) auto; @media (max-height: 780px) { margin: 0 auto; }").form-wrapper
+      form(method="post", action="/user/register").uk-form-stacked.login
+        h2 New Account
+        div.uk-margin
+          label.uk-form-label E-MAIL
+          div.uk-inline
+            span(uk-icon="icon: mail").uk-form-icon
+            input(name="email", type="email", value=email, disabled).uk-input
+        div.uk-margin
+          label.uk-form-label Nickname
+          div.uk-inline
+            span(uk-icon="icon: user").uk-form-icon
+            input(name="username", type="text", required, autocomplete="off")#un-input.uk-input
+          div#un-input-cond.cond-box.hidden
+            p Username must contain the following:
+            ul.uk-list(style="margin-left: 16px;")
+              li
+                span(id="un-icon")
+                | Minimum 3 characters
+        div.uk-margin
+          label.uk-form-label Password
+          div.uk-inline
+            span(uk-icon="icon: lock").uk-form-icon
+            input#pw-input(name="password", type="password",pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",title="8 or more charactors & Upper/lowercase letters & At least one number", required, autocomplete="off").uk-input
+          div#pw-input-cond.cond-box.hidden
+            p Password must contain the following:
+            ul.uk-list(style="margin-left: 16px;")
+              li
+                span#pw-lower-icon
+                | A lowercase letter
+              li
+                span#pw-upper-icon
+                | A uppercase latter
+              li
+                span#pw-num-icon
+                | A number
+              li
+                span#pw-min-icon
+                | Minimum 8 characters
+        div.uk-margin
+          label.uk-form-label Password(Confirm)
+          div.uk-inline
+            span(uk-icon="icon: lock").uk-form-icon
+            input(type="password", required, autocomplete="off")#cf-input.uk-input
+          div#cf-input-cond.cond-box.hidden
+            ul.uk-list(style="margin-left: 16px;")
+              li
+                span#cf-icon
+                | Passwords Match
+        input(type="hidden", name="token",value=token , autocomplete="off")
+        button(disabled)#submit.uk-button.uk-button-default.btn-log.uk-width-1-1 Submit
+  include /_footer

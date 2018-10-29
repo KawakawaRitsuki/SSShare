@@ -1,0 +1,10 @@
+GET:/user/new
+ - input: email
+POST:/user/new
+ - リダイレクト: /user/send
+GET:/user/send
+ - メールからリンク
+GET:/user/register?token=
+ - 諸項目入力
+POST:/user/register
+ - リダイレクト: /user/registered

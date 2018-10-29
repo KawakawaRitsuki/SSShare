@@ -1,0 +1,48 @@
+.top-flex .movie-box {
+  width: 40vw;
+  height: 22.5vw;
+  margin: calc(50vh - 40px - 11.25vw - 40px) 5vw 0;
+  iframe {
+    width: 40vw;
+    height: 22.5vw;
+  }
+  span {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 32px;
+    line-height: 1em;
+    margin-bottom: 8px;
+  }
+}
+
+
+.seaurchin-score-share {
+  width: 24vw;
+  height: 15vw;
+  margin: 0 auto;
+  margin-top: calc((100vh - 80px - 15vw) / 2);
+  svg {
+    width: 100%;
+  }
+}
+
+.down {
+  color: #666;
+  display: block;
+  margin: calc(((100vh - 80px - 15vw) / 4) - 36px ) auto;
+  width: fit-content;
+  &:hover {
+    color: #999;
+  }
+  span svg {
+    height: 72px;
+    width: 72px;
+  }
+}
+
+.box {
+  margin-top: 72px !important;
+  margin-bottom: 72px !important;
+}
+

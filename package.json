@@ -1,0 +1,39 @@
+{
+  "name": "SSShare",
+  "version": "1.0.0",
+  "description": "Seaurchin Score Share",
+  "main": "app.js",
+  "repository": "https://github.com/KawakawaRitsuki/SSShare.git",
+  "author": "Ritsuki Goto <develop@mizucoffee.net>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "config": "^2.0.1",
+    "connect-mongo": "^2.0.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "http": "^0.0.0",
+    "identicon": "^2.1.2",
+    "mongoose": "^5.3.7",
+    "nodemailer": "^4.6.8",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3",
+    "sus-analyzer": "^1.1.0",
+    "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-typescript": "^5.0.0-alpha.3",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.1.3"
+  }
+}

@@ -1,0 +1,44 @@
+.form-wrapper {
+  margin: calc((100vh - 424px - 80px - 24px) / 2) auto;
+  @media (max-height: 780px) {
+    margin: 0 auto;
+  }
+}
+
+
+.login {
+  padding: 32px;
+  margin: 128px auto;
+
+  min-width: calc(480px - 32px * 2);
+  width: fit-content;
+  background: #666;
+  color: #FFF;
+  border-radius: 10px;
+  h2 {
+    color: #FFF;
+    text-align: center;
+    margin-top: 0;
+  }
+  a {
+    color: #FFF;
+    &:hover{
+    color: #FFF;
+    }
+  }
+  .uk-inline {
+    width: 100% !important;
+  }
+  label {
+    color: #FFF;
+  }
+  button {
+    color: #FFF;
+  }
+  .uk-logo svg {
+    height: 48px;
+    fill: #FFF;
+    transition: .1s ease-in-out;
+    transition-property: fill;
+  }
+}

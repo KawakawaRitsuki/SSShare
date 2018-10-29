@@ -1,0 +1,13 @@
+{
+  "server": {
+    "domain": "your.domain",
+    "port": 80,
+    "mongo": "127.0.0.1"
+  },
+  "mail": {
+    "host": "smtp.example.com",
+    "port": 465,
+    "user": "example@example.com",
+    "pass": "password"
+  }
+}

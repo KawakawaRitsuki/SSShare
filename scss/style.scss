@@ -1,0 +1,42 @@
+nav {
+  background: #666;
+  a {
+    color: #fff !important;
+    &:hover {
+      color: #bbb !important;
+    }
+  }
+  .uk-logo {
+    &:hover svg{
+      fill: #bbb !important;
+    }
+    svg {
+      height: 32px;
+      fill: #FFF;
+      transition: .1s ease-in-out;
+      transition-property: fill;
+    }
+  }
+}
+
+.uk-section-primary {
+  background: #666 !important;
+}
+
+
+.uk-navbar-item form {
+  margin-bottom: 0;
+  button {
+    color: #FFF;
+  }
+}
+
+footer {
+  background: #666;
+  color: #FFF;
+  text-align: center;
+}
+
+.uk-section-default {
+  min-height: calc(100vh - 80px - 24px)
+}

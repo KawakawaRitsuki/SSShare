@@ -1,0 +1,24 @@
+header
+  nav.uk-container.uk-container-expand
+    div.uk-navbar
+      div.uk-navbar-left
+        a(href="/").uk-navbar-item.uk-logo
+          include /svgs/ssshare.svg
+        ul.uk-navbar-nav
+          li
+            a(href="/")= "Home"
+          li
+            a(href="/list")= "List"
+      div.uk-navbar-right
+        ul.uk-navbar-nav
+          li
+            div.uk-navbar-item
+              form(action="javascript:void(0)")
+                input(type="text", placeholder="Search...").uk-input.uk-form-width-small
+                button.uk-button.uk-button-default Search
+          li
+            if user==null
+              a(href="/user/login") <span uk-icon="icon: user"></span>&nbsp;Login
+            else
+              a(href="/user/login") <span uk-icon="icon: user"></span>&nbsp;#{user.name}
+

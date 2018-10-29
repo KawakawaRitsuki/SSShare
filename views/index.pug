@@ -1,0 +1,45 @@
+html
+  head
+    include _head
+    link(rel="stylesheet", href="/index.css")
+  body
+    include _header
+    div.top
+      div.uk-flex.top-flex
+        div.seaurchin-score-share
+          include /svgs/sss.svg
+        div.movie-box
+          span 今日の譜面
+          iframe(src="https://www.youtube.com/embed/RNfng1tYOrA")
+      a.down(href="#content", uk-scroll) <span uk-icon="chevron-down"></span>
+    div#content.uk-section.uk-section-primary
+      div.uk-container.uk-container-small.main
+        div.box
+          h2= "SSShareって何？Seaurchin公式なの？"
+          p SSShareはSeaurchin用譜面のsusファイルを手軽に共有する為のサービスです。
+            br
+            | SSShareは非公式のサービスです。が、作者さんに許可はもらっています。
+            br
+            br
+            | 譜面を集中させる事により、プレイヤーの検索の容易化、共有の効率化を目標にしています。
+            | もちろん別サイトで共有されているものを登録することも可能です。
+        div.box
+          h2= "SSShareは誰でも使えるの？"
+          p 譜面作者、プレイヤーを含む全ての方が全機能無料で利用できます。
+            br
+            | SShareはSeaurchin用譜面のsusファイルを手軽に共有する為のサービスです。
+        div.box
+          h2= "SSShareを使うにあたっての注意"
+          p このサービスは<a href="https://seaurchin.kb10uy.org/">Seaurchin Wiki</a>に記載されている<a href="https://seaurchin.kb10uy.org/wiki/score/publish">ガイドライン</a>に準拠しています。
+            | 常識の範囲内でご利用ください。
+            | 
+        div.box
+          h2= "なんでこんなサービス作ったの？"
+          p 私(@kawakawaritsuki)が欲しかったからです。
+        div.box
+          h2= "これから付けたい機能（メモ欄）"
+          p susをアップロードしたら動画でDL出来る機能
+          |
+    div#content.uk-section.uk-section-secondary
+      
+    include _footer

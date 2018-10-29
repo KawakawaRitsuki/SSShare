@@ -1,0 +1,24 @@
+html
+  head
+    include /_head
+    link(rel="stylesheet", href="/login.css")
+  body
+    include /_header
+    div.form-wrapper
+      form(method="post").uk-form-stacked.login
+        div.uk-navbar-item.uk-logo
+          include /svgs/ssshare.svg
+        div.uk-margin
+          label.uk-form-label E-MAIL
+          div.uk-inline
+            span(uk-icon="icon: mail").uk-form-icon
+            input(type="text", name="email").uk-input
+        div.uk-margin
+          label.uk-form-label PASSWORD
+          div.uk-inline
+            span(uk-icon="icon: lock").uk-form-icon
+            input(type="password", name="password").uk-input
+          a.uk-link-muted Forgot your password?
+        button.uk-button.uk-button-default.btn-log.uk-width-1-1 Login
+        a(href="/user/new").uk-link-muted New Account?
+    include /_footer
