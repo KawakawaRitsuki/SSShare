@@ -32,57 +32,51 @@ header
                   a(href=`/user/${user.id}`) <span uk-icon="icon: user"></span>&nbsp;My Page
                 li
                   a(href="/account/logout") <span uk-icon="icon: sign-out"></span>&nbsp;Logout
-  div(uk-modal)#upload2.uk-modal-container
-    div.uk-modal-dialog.uk-modal-body
-      h2 Upload
-      div.js-upload.uk-placeholder.uk-text-center
-        span(uk-icon="icon: cloud-upload")
-        span.uk-text-middle Attach binaries by dropping them here or
-        div(uk-form-custom)
-          input(type="file" multiple)
-          span.uk-link selecting one
-      p.uk-text-right
-        button(type="button").uk-button.uk-button-default.uk-modal-close Cancel
-        button(type="button").uk-button.uk-button-primary Save
-  
+
   div(uk-modal)#upload.uk-modal-container
-    div.uk-modal-dialog.uk-modal-body
-      h2 Upload
-      div(uk-grid).uk-child-width-expand
-        div
-          textarea#sus_area(rows="22", style="width: 100%;")
-        div
-          form(method="post", action="/account/register").uk-form-horizontal
-            div.uk-margin
-              label.uk-form-label SONG NAME
-              div.uk-inline
-                span(uk-icon="icon: bell").uk-form-icon
-                input#sus_songname().uk-input
-            div.uk-margin
-              label.uk-form-label ARTIST
-              div.uk-inline
-                span(uk-icon="icon: users").uk-form-icon
-                input#sus_artist().uk-input
-            div.uk-margin
-              label.uk-form-label DESIGNER
-              div.uk-inline
-                span(uk-icon="icon: user").uk-form-icon
-                input#sus_designer().uk-input
-            div.uk-margin
-              label.uk-form-label DIFFICULTY
-              div.uk-inline
-                span(uk-icon="icon: thumbnails").uk-form-icon
-                input#sus_difficulty().uk-input
-            div.uk-margin
-              label.uk-form-label PLAY LEVEL
-              div.uk-inline
-                span(uk-icon="icon: bolt").uk-form-icon
-                input#sus_playlevel().uk-input
-            div.uk-margin
-              label.uk-form-label BASEBPM
-              div.uk-inline
-                span(uk-icon="icon: settings").uk-form-icon
-                input#sus_basebpm().uk-input
-      p.uk-text-right
+    div.uk-modal-dialog
+      button(type="button", uk-close).uk-modal-close-default
+      div.uk-modal-header
+        h2.uk-modal-title Upload (1/2)
+      div(uk-overflow-auto).uk-modal-body
+        div(uk-grid).uk-child-width-expand
+          div(style="text-align: right;")
+            textarea.uk-textarea#sus_area(rows="14", style="width: calc(100% - 32px);margin: 0 16px;")
+            p(uk-form-custom).js-upload
+              input#sus_file(type="file", accept=".sus")
+              button(type="button", tabindex="-1").uk-button.uk-button-primary Upload
+          div
+            form(method="post", action="/account/register").uk-form-horizontal
+              div.uk-margin
+                label.uk-form-label SONG ID
+                div.uk-inline
+                  span(uk-icon="icon: tag").uk-form-icon
+                  input#sus_songid(readonly).uk-input
+              div.uk-margin
+                label.uk-form-label TITLE
+                div.uk-inline
+                  span(uk-icon="icon: bookmark").uk-form-icon
+                  input#sus_songname(readonly).uk-input
+              div.uk-margin
+                label.uk-form-label ARTIST
+                div.uk-inline
+                  span(uk-icon="icon: users").uk-form-icon
+                  input#sus_artist(readonly).uk-input
+              div.uk-margin
+                label.uk-form-label DESIGNER
+                div.uk-inline
+                  span(uk-icon="icon: user").uk-form-icon
+                  input#sus_designer(readonly).uk-input
+              div.uk-margin
+                label.uk-form-label DIFFICULTY
+                div.uk-inline
+                  span(uk-icon="icon: thumbnails").uk-form-icon
+                  input#sus_difficulty(readonly).uk-input
+              div.uk-margin
+                label.uk-form-label PLAY LEVEL
+                div.uk-inline
+                  span(uk-icon="icon: bolt").uk-form-icon
+                  input#sus_playlevel(readonly).uk-input
+      div.uk-modal-footer.uk-text-right
         button(type="button").uk-button.uk-button-default.uk-modal-close Cancel
-        button(type="button").uk-button.uk-button-primary Save
+        button(type="button").uk-button.uk-button-primary Submit
