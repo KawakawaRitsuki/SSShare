@@ -37,16 +37,17 @@ header
     div.uk-modal-dialog
       button(type="button", uk-close).uk-modal-close-default
       div.uk-modal-header
-        h2.uk-modal-title Upload (1/2)
+        h2.uk-modal-title Upload (1/3)
       div(uk-overflow-auto).uk-modal-body
         div(uk-grid).uk-child-width-expand
           div(style="text-align: right;")
             textarea.uk-textarea#sus_area(rows="14", style="width: calc(100% - 32px);margin: 0 16px;")
+            | ※WAVEOFFSETは別で管理されるため削除されます&nbsp;&nbsp;
             p(uk-form-custom).js-upload
               input#sus_file(type="file", accept=".sus")
               button(type="button", tabindex="-1").uk-button.uk-button-primary Upload
           div
-            form(method="post", action="/account/register").uk-form-horizontal
+            form().uk-form-horizontal
               div.uk-margin
                 label.uk-form-label SONG ID
                 div.uk-inline
@@ -79,4 +80,34 @@ header
                   input#sus_playlevel(readonly).uk-input
       div.uk-modal-footer.uk-text-right
         button(type="button").uk-button.uk-button-default.uk-modal-close Cancel
-        button(type="button").uk-button.uk-button-primary Submit
+        button(type="button",uk-toggle="target: #upload2",disabled)#submit_btn.uk-button.uk-button-primary Next
+
+  div(uk-modal)#upload2
+    div.uk-modal-dialog
+      button(type="button", uk-close).uk-modal-close-default
+      div.uk-modal-header
+        h2.uk-modal-title Upload (2/3)
+      div(uk-overflow-auto).uk-modal-body
+        div
+          form().uk-form-horizontal
+            div.uk-margin
+              label.uk-form-label YouTube
+              div.uk-inline
+                span(uk-icon="icon: youtube").uk-form-icon
+                input#yt_link().uk-input
+            div.uk-margin
+              label.uk-form-label Note
+              div.uk-inline
+                span(uk-icon="icon: file-text").uk-form-icon
+                input#note().uk-input
+            div.uk-margin
+              label
+                input(type="checkbox", style="margin-left: 16px;")#check1.uk-checkbox
+                | &nbsp;この譜面はSeaurchinの公開<a href="https://seaurchin.kb10uy.org/wiki/score/publish" target="blank">ガイドライン</a>に沿っています。
+            div.uk-margin
+              label
+                input(type="checkbox", style="margin-left: 16px;")#check2.uk-checkbox
+                | &nbsp;この譜面は自分が作ったものです。
+      div.uk-modal-footer.uk-text-right
+        button(type="button",uk-toggle="target: #upload").uk-button.uk-button-default.uk-modal-close Back
+        button(type="button",disabled)#submit2_btn.uk-button.uk-button-primary Publish
