@@ -18,13 +18,18 @@ const submit2_btn = document.getElementById('submit2_btn')
 
 const yt_link = document.getElementById('yt_link')
 const note = document.getElementById('note')
-const check1 = document.getElementById('check1')
-const check2 = document.getElementById('check2')
+const music_s = document.getElementById('music_s')
+const music_o = document.getElementById('music_o')
+const movie_s = document.getElementById('movie_s')
+const movie_o = document.getElementById('movie_o')
+const checkbox1 = document.getElementById('check1')
+const checkbox2 = document.getElementById('check2')
 
 sus_area.onkeyup = check
 sus_area.onchange = check
 
 check()
+check2()
 
 function check() {
   form_stat(sus_area,SusAnalyzer.validate(sus_area.value).VALIDITY)
@@ -68,7 +73,7 @@ sus_file.addEventListener('change',e => {
           let reader = new FileReader()
           reader.readAsText(sus_file.files[0], "UTF-8")
           reader.onload = evt => { sus_area.value = evt.target.result;sus_file.value = ""; check() }
-        },() => UIkit.modal(element).show())
+        },() => UIkit.modal(form).show())
   } else {
     let reader = new FileReader()
     reader.readAsText(sus_file.files[0], "UTF-8")
@@ -76,30 +81,71 @@ sus_file.addEventListener('change',e => {
   }
 })
 
-check1.onchange = checkbox
-check2.onchange = checkbox
-function checkbox() {
-  submit2_btn.disabled = !(check1.checked && check2.checked)
+checkbox1.onchange = check2; checkbox2.onchange = check2
+music_s.onkeyup = check2; music_s.onchange = check2
+music_o.onkeyup = check2; music_o.onchange = check2
+movie_s.onkeyup = check2; movie_s.onchange = check2
+movie_o.onkeyup = check2; movie_o.onchange = check2
+yt_link.onkeyup = check2; yt_link.onchange = check2
+
+function check2() {
+  let s = true
+  if(music_s.value != "") {
+    s = form_stat(music_o,music_o.value != "") ? s : false
+    music_o.disabled = false
+  } else {
+    music_o.disabled = true
+    music_o.classList.remove('uk-form-success')
+    music_o.classList.remove('uk-form-danger')
+  }
+  if(movie_s.value != "") {
+    s = form_stat(movie_o,movie_o.value != "") ? s : false
+    movie_o.disabled = false
+  } else {
+    movie_o.disabled = true
+    movie_o.classList.remove('uk-form-success')
+    movie_o.classList.remove('uk-form-danger')
+  }
+  if(yt_link.value != "") s = form_stat(yt_link,yt_link.value.match(/^http[s]*:\/\/www.youtube.com\/watch\?v=\w{11}/)) ? s : false
+  s = check1.checked && check2.checked ? false : s
+  submit2_btn.disabled = !s
 }
 
 submit2_btn.onclick = () => {
   const form = document.createElement('form')
-  const input = document.createElement('input')
 
   form.method = 'POST'
   form.action = '/score/new'
 
-  input.name = 'sus'
-  input.value = sus_area.value
-  form.appendChild(input)
-  input.name = 'yt'
-  input.value = yt_link.value
-  form.appendChild(input)
-  input.name = 'sus'
-  input.value = note.value
-  form.appendChild(input)
+  const input1 = document.createElement('textarea')
+  input1.name = 'sus'
+  input1.value = sus_area.value
+  form.appendChild(input1)
+  const input2 = document.createElement('input')
+  input2.name = 'yt'
+  input2.value = yt_link.value
+  form.appendChild(input2)
+  const input3 = document.createElement('input')
+  input3.name = 'note'
+  input3.value = note.value
+  form.appendChild(input3)
+  const input4 = document.createElement('input')
+  input4.name = 'music_s'
+  input4.value = music_s.value
+  form.appendChild(input4)
+  const input5 = document.createElement('input')
+  input5.name = 'music_o'
+  input5.value = music_o.value
+  form.appendChild(input5)
+  const input6 = document.createElement('input')
+  input6.name = 'movie_s'
+  input6.value = movie_s.value
+  form.appendChild(input6)
+  const input7 = document.createElement('input')
+  input7.name = 'movie_o'
+  input7.value = movie_o.value
+  form.appendChild(input7)
 
   document.body.appendChild(form)
   form.submit()
-  document.body.removeChild(form)
 }

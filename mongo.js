@@ -9,7 +9,6 @@ const UserSchema = new Schema({
   username: String,
   email: String,
   password: String,
-  icon_path: String,
   confirm_token: String,
   id: Number
 })

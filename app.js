@@ -3,7 +3,9 @@ const express = require('express'),
   ConnectMongo = require('connect-mongo')(session),
   fs = require('fs'),
   config = require('config'),
-  bodyparser = require('body-parser')
+  bodyparser = require('body-parser'),
+  db = require('./mongo').db,
+  User = require('./mongo').User
 
 const app = express()
 const mongoUrl = config.get('server.mongo')
@@ -31,12 +33,20 @@ app.use(passport.session())
 app.set('view engine', 'pug')
 app.locals.basedir = './views'
 
-const server = app.listen(config.get("server.port") || 3000, () => {
-  console.log('PORT: ' + server.address().port)
+app.use((req, res, next) => {
+  if(req.session.hasOwnProperty('passport') && req.session.passport.hasOwnProperty('user'))
+    User.findOne({_id:req.session.passport.user})
+      .then(user => req.user = user)
+      .catch(e => { req.user = null;console.log(e)})
+      .finally(next())
+  else {
+    req.user = null
+    next()
+  }
 })
 
-const root = require('./routes/root')(),
-  account = require('./routes/account')(passport)
+const server = app.listen(config.get("server.port") || 3000, () => console.log('PORT: ' + server.address().port))
 
-app.use("/",root)
-app.use("/account",account)
+app.use("/",require('./routes/root')())
+app.use("/account",require('./routes/account')(passport))
+app.use("/score",require('./routes/score')())

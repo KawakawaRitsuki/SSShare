@@ -1,13 +1,8 @@
 const
-  router = require('express').Router(),
-  db = require('../mongo').db,
-  User = require('../mongo').User
+  router = require('express').Router()
 
 module.exports = () => {
-  router.get("/", (req,res) => {
-    if(!req.session.hasOwnProperty('passport')) return res.render('index',{title: "TopPage | SSShare"})
-    User.findOne({_id:req.session.passport.user}).then(user => res.render('index',{title: "TopPage | SSShare",user: user}))
-  })
+  router.get("/", (req,res) => res.render('index',{title: "TopPage | SSShare",user: req.user}))
 
   return router
 }
