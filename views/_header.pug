@@ -95,13 +95,12 @@ header
               label.uk-form-label Music Source
               div.uk-inline
                 span(uk-icon="icon: microphone").uk-form-icon
-                input#music_s(name="music-s", placeholder="ex: Google Play Store").uk-input
+                input#music_s(name="music-s", placeholder="recochoku等のリンク").uk-input
             div.uk-margin
               label.uk-form-label Music Offset
               div.uk-inline
                 span(uk-icon="icon: settings").uk-form-icon
                 input#music_o(name="music-o",type="number").uk-input
-            | 自作音源の場合はSoundCloud等のリンクを貼ってください。
             div.uk-margin
               label.uk-form-label Movie Source
               div.uk-inline
@@ -112,7 +111,11 @@ header
               div.uk-inline
                 span(uk-icon="icon: settings").uk-form-icon
                 input#movie_o(name="movie-o",type="number").uk-input
-            | 自作映像の場合はDropBox等のリンクを貼ってください。
+            div.uk-margin
+              label.uk-form-label Jacket Source
+              div.uk-inline
+                span(uk-icon="icon: instagram").uk-form-icon
+                input#jacket(name="jacket").uk-input
             div.uk-margin
               label.uk-form-label YouTube
               div.uk-inline
@@ -122,7 +125,8 @@ header
               label.uk-form-label Note
               div.uk-inline
                 span(uk-icon="icon: file-text").uk-form-icon
-                input#note(name="note",placeholder="例: TVサイズです").uk-input
+                input#note(name="note",placeholder="ex: TV size").uk-input
+            | Tips: 自作素材の場合はDropBox等のリンクを貼ってください。
             div.uk-margin
               label
                 input(type="checkbox", style="margin-left: 16px;")#check1.uk-checkbox

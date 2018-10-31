@@ -22,6 +22,7 @@ const music_s = document.getElementById('music_s')
 const music_o = document.getElementById('music_o')
 const movie_s = document.getElementById('movie_s')
 const movie_o = document.getElementById('movie_o')
+const jacket = document.getElementById('jacket')
 const checkbox1 = document.getElementById('check1')
 const checkbox2 = document.getElementById('check2')
 
@@ -87,6 +88,7 @@ music_o.onkeyup = check2; music_o.onchange = check2
 movie_s.onkeyup = check2; movie_s.onchange = check2
 movie_o.onkeyup = check2; movie_o.onchange = check2
 yt_link.onkeyup = check2; yt_link.onchange = check2
+jacket.onkeyup = check2; jacket.onchange = check2
 
 function check2() {
   let s = true
@@ -106,7 +108,12 @@ function check2() {
     movie_o.classList.remove('uk-form-success')
     movie_o.classList.remove('uk-form-danger')
   }
-  if(yt_link.value != "") s = form_stat(yt_link,yt_link.value.match(/^http[s]*:\/\/www.youtube.com\/watch\?v=\w{11}/)) ? s : false
+  if(yt_link.value != "")
+    s = form_stat(yt_link,yt_link.value.match(/^http[s]*:\/\/www.youtube.com\/watch\?v=\w{11}/)) ? s : false
+  else {
+    yt_link.classList.remove('uk-form-success')
+    yt_link.classList.remove('uk-form-danger')
+  }
   s = check1.checked && check2.checked ? false : s
   submit2_btn.disabled = !s
 }
@@ -145,6 +152,10 @@ submit2_btn.onclick = () => {
   input7.name = 'movie_o'
   input7.value = movie_o.value
   form.appendChild(input7)
+  const input8 = document.createElement('input')
+  input8.name = 'jacket'
+  input8.value = jacket.value
+  form.appendChild(input8)
 
   document.body.appendChild(form)
   form.submit()
