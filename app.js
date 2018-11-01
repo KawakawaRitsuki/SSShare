@@ -1,5 +1,6 @@
 const express = require('express'),
   session = require('express-session'),
+  fileUpload = require('express-fileupload'),
   ConnectMongo = require('connect-mongo')(session),
   fs = require('fs'),
   config = require('config'),
@@ -27,6 +28,9 @@ app.disable('x-powered-by')
 app.use(sessionMiddleware)
 app.use(bodyparser.urlencoded({ limit:'100mb',extended: true }))
 app.use(bodyparser.json({limit:'100mb'}))
+app.use(fileUpload({
+  limits: { fileSize: 8 * 1024 * 1024 }
+}))
 app.use(express.static('./public'))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -50,3 +54,4 @@ const server = app.listen(config.get("server.port") || 3000, () => console.log('
 app.use("/",require('./routes/root')())
 app.use("/account",require('./routes/account')(passport))
 app.use("/score",require('./routes/score')())
+app.use("/user",require('./routes/user')())

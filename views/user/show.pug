@@ -1,0 +1,56 @@
+html
+  head
+    include /_head
+    // link(rel="stylesheet", href="/score-new.css")
+    style(type="text/css").
+      .uk-tab>.uk-active>a {
+        border-bottom: 2px solid #666;
+      }
+      .uk-tab>*>a {
+        padding: 9px 20px;
+      }
+
+  body
+    include /_header
+    div.uk-container.uk-container-large
+      div(uk-grid).uk-grid-large
+        div.uk-width-1-4.uk-text-center
+          img(src=`http://192.168.5.18:8000/account/icon/${page_user._id}`,style="width: 80%;margin: 20% 10% 10%;")
+          div(style="font-size: 18pt;")= page_user.username
+          div= `ID: ${page_user.id}`
+        div.uk-width-3-4.uk-padding
+          ul(uk-tab="").uk-tab.uk-margin
+            li.uk-active
+              a(href="#") Scores
+            li
+              a(href="#") Stars
+          ul.uk-switcher.uk-margin
+            li
+              table.uk-table.uk-table-striped
+                thead
+                  tr
+                    th 曲名
+                    th アーティスト
+                    th デザイナー
+                    th 難易度
+                    th レベル
+                tfoot
+                  tr
+                    th 曲名
+                    th アーティスト
+                    th デザイナー
+                    th 難易度
+                    th レベル
+                tbody
+                  each score in scores
+                    tr
+                      td= score.TITLE
+                      td= score.ARTIST
+                      td= score.DESIGNER
+                      td= score.DIFFICULTY.LEVEL
+                      td= score.PLAYLEVEL
+            li
+              each star in page_user.star
+                p= score
+
+    include /_footer

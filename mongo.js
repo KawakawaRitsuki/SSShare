@@ -10,7 +10,10 @@ const UserSchema = new Schema({
   email: String,
   password: String,
   confirm_token: String,
-  id: Number
+  id: Number,
+  sns: { type: Schema.Types.Mixed, default: {} },
+  bio: String,
+  star: []
 })
 
 UserSchema.plugin(autoinc, { inc_field: 'id'})
@@ -21,8 +24,8 @@ const ScoreSchema = new Schema({
   youtube_link: String,
   note: String,
   jacket_link: String,
-  wave: { type: Schema.Types.Mixed, default: {}},
-  movie: { type: Schema.Types.Mixed, default: {}},
+  wave: [],
+  movie: [],
   user_id: Number,
   score_id: Number
 })

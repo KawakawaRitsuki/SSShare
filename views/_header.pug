@@ -31,6 +31,9 @@ header
                 li
                   a(href=`/user/${user.id}`) <span uk-icon="icon: user"></span>&nbsp;My Page
                 li
+                  a(href="/account/settings") <span uk-icon="icon: cog"></span>&nbsp;Settings
+                li.uk-nav-divider
+                li
                   a(href="/account/logout") <span uk-icon="icon: sign-out"></span>&nbsp;Logout
 
   div(uk-modal)#upload.uk-modal-container
@@ -42,11 +45,9 @@ header
         div(uk-grid).uk-child-width-expand
           div(style="text-align: right;")
             textarea.uk-textarea#sus_area(name="sus",rows="14", style="width: calc(100% - 32px);margin: 0 16px;")
-            div(style="padding: 0 18px").uk-flex
-              p(style="padding: 8px 0;margin: 20px 0;") ※WAVEOFFSETは別で管理されるため0になります&nbsp;&nbsp;
-              p(uk-form-custom).js-upload
-                input#sus_file(type="file", accept=".sus")
-                button(type="button", tabindex="-1").uk-button.uk-button-primary Upload
+            p(uk-form-custom).js-upload
+              input#sus_file(type="file", accept=".sus")
+              button(type="button", tabindex="-1").uk-button.uk-button-primary Upload
           div
             form().uk-form-horizontal
               div.uk-margin

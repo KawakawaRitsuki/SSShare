@@ -32,7 +32,7 @@ module.exports = {
       from: config.get('mail.user'),
       subject: '新規アカウント登録 | SSShare',
       to: addr,
-      text: `アカウントを作成するには下記リンクをクリックしてください。<br><br><a href="http://${config.get('server.domain')}:8000/user/register?token=${token}">http://${config.get('server.domain')}/user/register?token=${token}`
+      text: `アカウントを作成するには下記リンクをクリックしてください。<br><br><a href="http://${config.get('server.domain')}:8000/account/register?token=${token}">http://${config.get('server.domain')}/account/register?token=${token}`
     };
 
     transporter.sendMail( mes, ( error, info ) => {

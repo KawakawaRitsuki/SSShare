@@ -108,13 +108,13 @@ function check2() {
     movie_o.classList.remove('uk-form-success')
     movie_o.classList.remove('uk-form-danger')
   }
-  if(yt_link.value != "")
+  if(yt_link.value != "") {
     s = form_stat(yt_link,yt_link.value.match(/^http[s]*:\/\/www.youtube.com\/watch\?v=\w{11}/)) ? s : false
-  else {
+  } else {
     yt_link.classList.remove('uk-form-success')
     yt_link.classList.remove('uk-form-danger')
   }
-  s = check1.checked && check2.checked ? false : s
+  s = checkbox1.checked && checkbox2.checked ? s : false
   submit2_btn.disabled = !s
 }
 

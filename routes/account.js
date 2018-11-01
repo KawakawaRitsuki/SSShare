@@ -2,7 +2,11 @@ const router = require('express').Router(),
   bcrypt = require('bcrypt'),
   identicon = require('identicon'),
   fs = require('fs'),
+  path = require('path'),
+  jimp = require('jimp'),
+  ObjectId = require('mongoose').Types.ObjectId,
   mail = require('../mail'),
+  isLoggedIn = require('../isLoggedIn'),
   db = require('../mongo').db,
   User = require('../mongo').User
 
@@ -41,7 +45,7 @@ module.exports = passport => {
         if(!doc) return res.redirect('/account/new',)
         res.render('account/register',{title: "New Account | SSShare",email: doc.email,token: req.query.token})
       }).catch(err => {
-        res.redirect('/account/new',)
+        res.redirect('/account/new')
       })
   })
 
@@ -72,7 +76,30 @@ module.exports = passport => {
     res.sendFile('/icons/' + req.params.id + '.png', { root: './' })
   })
 
-  router.get("/logout", (req,res) => {
+  router.get('/settings', isLoggedIn, (req,res) => {
+    console.log(req.user)
+    res.render('account/settings',{title: "Settings | SSShare", user: req.user})
+  })
+
+  router.post('/settings', isLoggedIn, async (req,res) => {
+    if(req.hasOwnProperty('files') && req.files.hasOwnProperty('avater')) {
+      const image = await jimp.read(req.files.avater.data)
+      image.cover(400, 400)
+      await image.writeAsync(`./icons/${req.user._id.toString()}.png`)
+    }
+    if(req.body.hasOwnProperty('twitter')) await updateSNS(req.user, 'twitter', req.body.twitter)
+    if(req.body.hasOwnProperty('github')) await updateSNS(req.user, 'github', req.body.github)
+    if(req.body.hasOwnProperty('youtube')) await updateSNS(req.user, 'youtube', req.body.github)
+    res.redirect('/account/settings')
+  })
+
+  async function updateSNS(user, target, account) {
+    user.sns[target] = account
+    user.markModified('sns')
+    await user.save()
+  }
+
+  router.get("/logout", isLoggedIn, (req,res) => {
     req.session.destroy()
     res.redirect('/')
   })
@@ -82,3 +109,4 @@ module.exports = passport => {
 
 // ユーザー名は重複可
 // TODO: スクリーンネーム重複チェック
+// TODO: ログイン直後Upload消えてない？

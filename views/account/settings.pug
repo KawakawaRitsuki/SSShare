@@ -1,0 +1,95 @@
+html
+  head
+    include /_head
+    style(type="text/css").
+      .uk-tab>.uk-active>a {
+        border-bottom: 2px solid #666;
+      }
+      .uk-tab>*>a {
+        padding: 9px 20px;
+      }
+      body .uk-container button {
+        margin-left: 4px !important;
+      }
+    script(type="text/javascript").
+      window.onload = () => {
+        const avater_file = document.getElementById('avater_file')
+        const avater_path_input = document.getElementById('avater_path_input')
+        const new_avater = document.getElementById('new_avater')
+
+        avater_file.addEventListener('change',e => {
+          if (avater_file.files[0]) {
+            let reader = new FileReader()
+            reader.readAsDataURL(avater_file.files[0])
+            reader.onload = evt => new_avater.src = evt.target.result
+            avater_path_input.value = avater_file.files[0].name
+          }
+        })
+      }
+
+  body
+    include /_header
+    div.uk-container.uk-container-large
+      div(uk-grid).uk-grid-large
+        div.uk-width-1-4.uk-text-center
+          img(src=`http://192.168.5.18:8000/account/icon/${user._id}`,style="width: 80%;margin: 20% 10% 10%;")
+          div(style="font-size: 18pt;")= user.username
+          div= `ID: ${user.id}`
+        div.uk-width-3-4.uk-padding
+          ul(uk-tab="").uk-tab.uk-margin
+            li
+              a(href="#") Login
+            li
+              a(href="#") Profile
+          ul.uk-switcher.uk-margin
+            li
+              div.uk-margin
+                form.uk-form-stacked
+                  label.uk-form-label E-Mail
+                  div.uk-inline()
+                    span(uk-icon="icon: mail").uk-form-icon
+                    input.uk-input
+                  button.uk-button.uk-button-primary Send Mail
+
+            li
+              div(style="padding-left: 16px;").uk-margin
+                form(method="post", enctype="multipart/form-data").uk-form-stacked
+                  h3 Avater
+                  div(style="margin-left: 16px;").uk-flex.uk-margin
+                    div
+                      img(src=`/account/icon/${user._id}`,style="width: 80px;")
+                      div(style="margin-top: 4px;").uk-text-center Current
+                    div
+                      span(uk-icon="icon: chevron-right", style="margin: 30px 20px")
+                    div
+                      img(src=`/account/icon/${user._id}`,style="width: 80px; height: 80px; object-fit: cover;")#new_avater
+                      div(style="margin-top: 4px;").uk-text-center New
+                  input(type="text",placeholder="Select file" , disabled)#avater_path_input.uk-input.uk-form-width-medium
+                  div(uk-form-custom="").js-upload
+                    input(name="avater", type="file", accept=".jpg,.png")#avater_file
+                    button.uk-button.uk-button-primary(type="button") Select
+                  button.uk-button.uk-button-primary(type="submit") Submit
+                  div Image < 8MB
+                hr
+                h3 SNS
+                div.uk-margin
+                  form(method="post").uk-form-stacked
+                    label.uk-form-label Twitter
+                    div.uk-inline
+                      span(uk-icon="icon: twitter").uk-form-icon
+                      input(name="twitter",value=user.sns.twitter).uk-input
+                    button.uk-button.uk-button-primary(type="submit") Submit
+                  form(method="post").uk-form-stacked
+                    label.uk-form-label Github
+                    div.uk-inline
+                      span(uk-icon="icon: github").uk-form-icon
+                      input(name="github",value=user.sns.github).uk-input
+                    button.uk-button.uk-button-primary(type="submit") Submit
+                  form(method="post").uk-form-stacked
+                    label.uk-form-label YouTube
+                    div.uk-inline
+                      span(uk-icon="icon: youtube").uk-form-icon
+                      input(name="youtube",value=user.sns.youtube).uk-input
+                    button.uk-button.uk-button-primary(type="submit") Submit
+
+    include /_footer

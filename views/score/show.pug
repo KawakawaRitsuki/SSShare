@@ -1,0 +1,12 @@
+html
+  head
+    include /_head
+    // link(rel="stylesheet", href="/score-new.css")
+  body
+    include /_header
+    div.uk-container.uk-container-large
+      span 投稿者
+      img(src=`http://192.168.5.18:8000/account/icon/${score_user._id}`,style="width: 80px;")
+      p= score
+      p= score_user
+    include /_footer
