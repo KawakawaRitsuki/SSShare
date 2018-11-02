@@ -12,58 +12,60 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const new_mes = {
+  from: config.get('mail.user'),
+  subject: '新規アカウント登録 | SSShare',
+  text: 'アカウントを作成するには下記リンクをクリックしてください。'
+};
+
 const reset_mes = {
   from: config.get('mail.user'),
   subject: 'パスワードリセット | SSShare',
-  text: 'TEST MAIL BODY'
-};
+  text: 'パスワードのリセットをするには下記リンクをクリックしてください。'
+}
 
 const change_mes = {
   from: config.get('mail.user'),
   subject: 'メールアドレス変更 | SSShare',
-  text: 'TEST MAIL BODY'
-};
+  text: 'メールアドレスの変更をするには下記リンクをクリックしてください。'
+}
 
 
 module.exports = {
   new: addr => {
     const token = uniqid()
-    const mes = {
-      from: config.get('mail.user'),
-      subject: '新規アカウント登録 | SSShare',
-      to: addr,
-      text: `アカウントを作成するには下記リンクをクリックしてください。<br><br><a href="http://${config.get('server.domain')}:8000/account/register?token=${token}">http://${config.get('server.domain')}/account/register?token=${token}`
-    };
+    let mes = Object.assign({},new_mes)
+    mes.to = addr
+    mex.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/register?token=${token}">http://${config.get('server.domain')}/account/register?token=${token}`
 
-    transporter.sendMail( mes, ( error, info ) => {
-      if( error ){
-        return console.log( error );
-      } else {
-        console.log('Message sent: ' + info.response);
-      }
+    transporter.sendMail(mes,(error, info) => {
+      if(error) return console.log(error)
+      console.log('Message sent: ' + info.response)
     })
     return token
   },
   reset: addr => {
-    let mes = reset_mes
+    const token = uniqid()
+    let mes = Object.assign({},reset_mes)
     mes.to = addr
-    transporter.sendMail( mes, ( error, info ) => {
-      if( error ){
-        return console.log( error );
-      } else {
-        console.log('Message sent: ' + info.response);
-      }
+    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/reset?token=${token}">http://${config.get('server.domain')}/account/reset?token=${token}`
+
+    transporter.sendMail(mes, (error, info) => {
+      if(error) return console.log(error)
+      console.log('Message sent: ' + info.response)
     })
+    return token
   },
   change: addr => {
-    let mes = change_mes
+    const token = uniqid()
+    let mes = Object.assign({},change_mes)
     mes.to = addr
-    transporter.sendMail( mes, ( error, info ) => {
-      if( error ){
-        return console.log( error );
-      } else {
-        console.log('Message sent: ' + info.response);
-      }
+    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/change?token=${token}">http://${config.get('server.domain')}/account/change?token=${token}`
+
+    transporter.sendMail(mes, (error, info) => {
+      if(error) return console.log(error)
+      console.log('Message sent: ' + info.response)
     })
+    return token
   }
 }

@@ -37,16 +37,18 @@ app.use(passport.session())
 app.set('view engine', 'pug')
 app.locals.basedir = './views'
 
-app.use((req, res, next) => {
-  if(req.session.hasOwnProperty('passport') && req.session.passport.hasOwnProperty('user'))
-    User.findOne({_id:req.session.passport.user})
-      .then(user => req.user = user)
-      .catch(e => { req.user = null;console.log(e)})
-      .finally(next())
-  else {
+app.use(async (req, res, next) => {
+  if(req.session.hasOwnProperty('passport') && req.session.passport.hasOwnProperty('user')) {
+    const user = await User.findOne({_id:req.session.passport.user})
+    if(!user) {req.user = null; next()}
+    delete user._doc.password
+    delete user._doc.email
+    delete user._doc.confirm_token
+    req.user = user
+  } else {
     req.user = null
-    next()
   }
+  next()
 })
 
 const server = app.listen(config.get("server.port") || 3000, () => console.log('PORT: ' + server.address().port))

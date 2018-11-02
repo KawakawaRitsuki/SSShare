@@ -8,8 +8,10 @@ const autoinc = require('mongoose-sequence')(db)
 const UserSchema = new Schema({
   username: String,
   email: String,
+  new_email: String,
   password: String,
   confirm_token: String,
+  confirmed: Boolean,
   id: Number,
   sns: { type: Schema.Types.Mixed, default: {} },
   bio: String,

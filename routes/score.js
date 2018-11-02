@@ -32,20 +32,16 @@ module.exports = passport => {
       score.movie = movie
     }
 
-    new Score(score).save()
-      .then(s => res.redirect("/score/" + s.score_id))
+    new Score(score).save().then(s => res.redirect("/score/" + s.score_id))
   })
 
-  router.get("/:id", (req,res) => {
-    Score.findOne({score_id:req.params.id})
-      .then(score => {
-        if(!score) return res.status(404).send('404 Not found')
-        let meta = Analyzer.getMeta(score.sus)
-        User.findOne({id: score.user_id})
-          .then(user => res.render('score/show',{title: meta.TITLE + " | SSShare", score: score , score_user: user ,user: req.user}))
-      })
+  router.get("/:id", async (req,res) => {
+    const score = await Score.findOne({score_id:req.params.id})
+    if(!score) return res.status(404).send('404 Not found')
+    const meta = Analyzer.getMeta(score.sus)
+    const user = await User.findOne({id: score.user_id})
+    res.render('score/show',{title: meta.TITLE + " | SSShare", score: score , score_user: user ,user: req.user})
   })
-
 
   return router
 }

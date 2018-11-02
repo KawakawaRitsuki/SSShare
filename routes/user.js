@@ -10,16 +10,12 @@ const router = require('express').Router(),
 
 module.exports = passport => {
 
-  router.get("/:id", (req,res) => {
-    User.findOne({id:req.params.id})
-      .then(user => {
-        if(!user) return res.status(404).send('404 Not found')
-        Score.find({user_id: req.params.id})
-          .then(scores => scores.map(score => Analyzer.getMeta(score.sus)))
-          .then(metas => res.render('user/show',{title: user.username + " | SSShare",page_user: user ,user: req.user,scores: metas}))
-      })
+  router.get("/:id", async (req,res) => {
+    const user = await User.findOne({id:req.params.id})
+    if(!user) return res.status(404).send('404 Not found')
+    user.scores = (await Score.find({user_id: req.params.id})).map(score => Analyzer.getMeta(score.sus))
+    res.render('user/show',{title: user.username + " | SSShare", page_user: user, user: req.user})
   })
-
 
   return router
 }

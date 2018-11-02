@@ -10,13 +10,11 @@ passport.use(
     passwordField: 'password',
     passReqToCallback: true,
     session: false
-  }, (req, email, password, done) => {
-    User.findOne({email: email})
-      .then(doc => {
-        if(!doc) return done(null, false)
-        bcrypt.compare(password, doc.password).then(res => {done(null, res ? doc : false)})
-      })
-      .catch(err => console.log(err))
+  }, async (req, email, password, done) => {
+    const user = await User.findOne({email: email})
+    if(!user) return done(null, false)
+    if(!user.confirmed) return done(null, false)
+    bcrypt.compare(password, user.password).then(res => done(null, res ? user : false))
   })
 )
 

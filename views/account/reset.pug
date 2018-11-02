@@ -1,0 +1,16 @@
+html
+  head
+    include /_head
+    link(rel="stylesheet", href="/login.css")
+  body
+    include /_header
+    div(style="margin: calc((100vh - 251px - 80px - 24px) / 2) auto;").form-wrapper
+      form(method="post").uk-form-stacked.login
+        h2 Password Reset
+        div.uk-margin
+          label.uk-form-label E-MAIL
+          div.uk-inline
+            span(uk-icon="icon: mail").uk-form-icon
+            input(name="email", type="email").uk-input
+        button.uk-button.uk-button-default.btn-log.uk-width-1-1 Send Mail
+    include /_footer

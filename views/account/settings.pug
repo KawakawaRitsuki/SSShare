@@ -17,6 +17,26 @@ html
         const avater_path_input = document.getElementById('avater_path_input')
         const new_avater = document.getElementById('new_avater')
 
+        const email = document.getElementById('email')
+        const mailbtn = document.getElementById('mailbtn')
+
+        const forms = {}
+        add('username')
+        add('bio')
+        add('twitter')
+        add('github')
+        add('youtube')
+
+        function add(target) {
+          forms[target] = {
+            input: document.getElementById(target),
+            submit: document.getElementById(`${target}_submit`),
+            current: document.getElementById(target).value
+          }
+          forms[target].input.onchange = textbox
+          forms[target].input.onkeyup = textbox
+        }
+
         avater_file.addEventListener('change',e => {
           if (avater_file.files[0]) {
             let reader = new FileReader()
@@ -25,6 +45,16 @@ html
             avater_path_input.value = avater_file.files[0].name
           }
         })
+
+        function textbox(e) {
+          const target = forms[e.srcElement.id]
+          target.submit.disabled = target.current == target.input.value
+        }
+
+        const checkEmail = () => mailbtn.disabled = !email.value.match(/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        email.onchange = checkEmail
+        email.onkeyup = checkEmail
+
       }
 
   body
@@ -35,61 +65,80 @@ html
           img(src=`http://192.168.5.18:8000/account/icon/${user._id}`,style="width: 80%;margin: 20% 10% 10%;")
           div(style="font-size: 18pt;")= user.username
           div= `ID: ${user.id}`
+          br
+          div= `${user.bio}`
         div.uk-width-3-4.uk-padding
           ul(uk-tab="").uk-tab.uk-margin
             li
-              a(href="#") Login
-            li
               a(href="#") Profile
+            li
+              a(href="#") Login
           ul.uk-switcher.uk-margin
             li
-              div.uk-margin
-                form.uk-form-stacked
-                  label.uk-form-label E-Mail
-                  div.uk-inline()
-                    span(uk-icon="icon: mail").uk-form-icon
-                    input.uk-input
-                  button.uk-button.uk-button-primary Send Mail
-
-            li
               div(style="padding-left: 16px;").uk-margin
-                form(method="post", enctype="multipart/form-data").uk-form-stacked
-                  h3 Avater
-                  div(style="margin-left: 16px;").uk-flex.uk-margin
-                    div
-                      img(src=`/account/icon/${user._id}`,style="width: 80px;")
-                      div(style="margin-top: 4px;").uk-text-center Current
-                    div
-                      span(uk-icon="icon: chevron-right", style="margin: 30px 20px")
-                    div
-                      img(src=`/account/icon/${user._id}`,style="width: 80px; height: 80px; object-fit: cover;")#new_avater
-                      div(style="margin-top: 4px;").uk-text-center New
-                  input(type="text",placeholder="Select file" , disabled)#avater_path_input.uk-input.uk-form-width-medium
-                  div(uk-form-custom="").js-upload
-                    input(name="avater", type="file", accept=".jpg,.png")#avater_file
-                    button.uk-button.uk-button-primary(type="button") Select
-                  button.uk-button.uk-button-primary(type="submit") Submit
-                  div Image < 8MB
+                h3 User
+                div(style="padding-left: 8px;").uk-margin
+                  form(method="post").uk-form-stacked
+                    label.uk-form-label Username
+                    div.uk-inline
+                      span(uk-icon="icon: user").uk-form-icon
+                      input(name="username",value=user.username)#username.uk-input
+                    button.uk-button.uk-button-primary(type="submit", disabled)#username_submit Submit
+                  form(method="post").uk-form-stacked
+                    label.uk-form-label Bio
+                    div.uk-inline
+                      span(uk-icon="icon: commenting").uk-form-icon
+                      input(name="bio",value=user.bio)#bio.uk-input
+                    button.uk-button.uk-button-primary(type="submit", disabled)#bio_submit Submit
+                h3 Avater
+                div(style="padding-left: 8px;").uk-margin
+                  form(method="post", enctype="multipart/form-data").uk-form-stacked
+                    div(style="margin-left: 16px;").uk-flex.uk-margin
+                      div
+                        img(src=`/account/icon/${user._id}`,style="width: 80px;")
+                        div(style="margin-top: 4px;").uk-text-center Current
+                      div
+                        span(uk-icon="icon: chevron-right", style="margin: 30px 20px")
+                      div
+                        img(src=`/account/icon/${user._id}`,style="width: 80px; height: 80px; object-fit: cover;")#new_avater
+                        div(style="margin-top: 4px;").uk-text-center New
+                    input(type="text",placeholder="Select file" , disabled)#avater_path_input.uk-input.uk-form-width-medium
+                    div(uk-form-custom="").js-upload
+                      input(name="avater", type="file", accept=".jpg,.png")#avater_file
+                      button.uk-button.uk-button-primary(type="button") Select
+                    button.uk-button.uk-button-primary(type="submit") Submit
+                    div Image < 8MB
                 hr
                 h3 SNS
-                div.uk-margin
+                div(style="padding-left: 8px;").uk-margin
                   form(method="post").uk-form-stacked
                     label.uk-form-label Twitter
                     div.uk-inline
                       span(uk-icon="icon: twitter").uk-form-icon
-                      input(name="twitter",value=user.sns.twitter).uk-input
-                    button.uk-button.uk-button-primary(type="submit") Submit
+                      input(name="twitter",value=user.sns.twitter)#twitter.uk-input
+                    button.uk-button.uk-button-primary(type="submit", disabled)#twitter_submit Submit
                   form(method="post").uk-form-stacked
                     label.uk-form-label Github
                     div.uk-inline
                       span(uk-icon="icon: github").uk-form-icon
-                      input(name="github",value=user.sns.github).uk-input
-                    button.uk-button.uk-button-primary(type="submit") Submit
+                      input(name="github",value=user.sns.github)#github.uk-input
+                    button.uk-button.uk-button-primary(type="submit", disabled)#github_submit Submit
                   form(method="post").uk-form-stacked
                     label.uk-form-label YouTube
                     div.uk-inline
                       span(uk-icon="icon: youtube").uk-form-icon
-                      input(name="youtube",value=user.sns.youtube).uk-input
-                    button.uk-button.uk-button-primary(type="submit") Submit
-
+                      input(name="youtube",value=user.sns.youtube)#youtube.uk-input
+                    button.uk-button.uk-button-primary(type="submit", disabled)#youtube_submit Submit
+            li
+              div(style="padding-left: 16px;").uk-margin
+                form(method="post", action="/account/change").uk-form-stacked
+                  label.uk-form-label E-Mail
+                  div.uk-inline()
+                    span(uk-icon="icon: mail").uk-form-icon
+                    input.uk-input(type="text",name="email")#email
+                  button(disabled)#mailbtn.uk-button.uk-button-primary Send Mail
+                form(method="post", action="/account/reset").uk-form-stacked
+                  label.uk-form-label Password
+                  input(type="hidden",name="loggedin",value="true")
+                  button.uk-button.uk-button-primary(type="submit")#youtube_submit Send Mail
     include /_footer
