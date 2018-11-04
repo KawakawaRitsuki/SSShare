@@ -40,16 +40,16 @@ function check() {
   sus_songid.value = meta.SONGID || ''
   sus_artist.value = meta.ARTIST || ''
   sus_designer.value = meta.DESIGNER || ''
-  sus_difficulty.value = meta.DIFFICULTY.LEVEL || ''
-  sus_playlevel.value = meta.PLAYLEVEL || ''
+  sus_difficulty.value = meta.DIFFICULTY.TEXT || ''
+  sus_playlevel.value = meta.DIFFICULTY.LEVEL === 4 ? meta.DIFFICULTY.MARK || '' : meta.PLAYLEVEL.TEXT || ''
 
   let s = true
   s = form_stat(sus_songname,meta.TITLE) ? s : false
   s = form_stat(sus_songid,meta.SONGID) ? s : false
   s = form_stat(sus_artist,meta.ARTIST) ? s : false
   s = form_stat(sus_designer,meta.DESIGNER) ? s : false
-  s = form_stat(sus_difficulty,meta.DIFFICULTY.LEVEL) ? s : false
-  s = form_stat(sus_playlevel,meta.PLAYLEVEL) ? s : false
+  s = form_stat(sus_difficulty,meta.DIFFICULTY.LEVEL >= 0 ) ? s : false
+  s = form_stat(sus_playlevel,meta.DIFFICULTY.LEVEL === 4 || meta.PLAYLEVEL.LEVEL) ? s : false
   submit_btn.disabled = !s
 }
 
@@ -120,6 +120,7 @@ function check2() {
 
 submit2_btn.onclick = () => {
   const form = document.createElement('form')
+  form.style.display = "none"
 
   form.method = 'POST'
   form.action = '/score/new'

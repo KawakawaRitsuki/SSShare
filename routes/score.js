@@ -39,6 +39,7 @@ module.exports = passport => {
     const score = await Score.findOne({score_id:req.params.id})
     if(!score) return res.status(404).send('404 Not found')
     const meta = Analyzer.getMeta(score.sus)
+    score.meta = meta
     const user = await User.findOne({id: score.user_id})
     res.render('score/show',{title: meta.TITLE + " | SSShare", score: score , score_user: user ,user: req.user})
   })

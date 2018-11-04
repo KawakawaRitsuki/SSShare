@@ -15,8 +15,8 @@ header
       ul.uk-navbar-nav
         li
           div.uk-navbar-item
-            form(action="javascript:void(0)")
-              input(type="text", placeholder="Search...").uk-input.uk-form-width-small
+            form(action="/list")
+              input(name="q", type="text", placeholder="Search...", value=query).uk-input.uk-form-width-small
               button.uk-button.uk-button-default Search
         if user==null
           li

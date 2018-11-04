@@ -1,6 +1,6 @@
 {
   "server": {
-    "domain": "your.domain",
+    "domain": "sss.example.com",
     "port": 80,
     "mongo": "127.0.0.1"
   },

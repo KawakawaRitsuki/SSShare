@@ -14,8 +14,7 @@ const saltRounds = 10
 
 module.exports = passport => {
   router.get('/login',is.NotLoggedIn, (req,res) => res.render('account/login',{title: 'Login | SSShare'}))
-  router.post('/login', is.NotLoggedIn, passport.authenticate('local', {successRedirect: '/', failureRedirect: '/account/login?failed=1'}))
-  //TODO: アカウント作成直後の/遷移時ログイン情報が渡らない
+  router.post('/login', is.NotLoggedIn, passport.authenticate('local', {failureRedirect: '/account/login?failed=1'}),(req,res) => res.redirect('/'))
 
   router.get('/new', is.NotLoggedIn, (req,res) => res.render('account/new',{title: 'New Account | SSShare'}))
   router.post('/new', is.NotLoggedIn, async (req,res) => {
@@ -113,7 +112,6 @@ module.exports = passport => {
     user.new_email = req.body.email
     user.confirm_token = mail.change(req.body.email)
     await user.save()
-
     res.render('message',{title: "Mail Send | SSShare", message: "メールを送信しました。受信トレイを確認してください。" , user: req.user})
   })
 

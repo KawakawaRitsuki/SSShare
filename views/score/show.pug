@@ -1,12 +1,69 @@
 html
   head
     include /_head
-    // link(rel="stylesheet", href="/score-new.css")
+    style(type="text/css").
+      .uk-tab>.uk-active>a {
+        border-bottom: 2px solid #666;
+      }
+      .uk-tab>*>a {
+        padding: 9px 20px;
+      }
+    script.
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+        return t;
+      }(document, "script", "twitter-wjs"));</script>
   body
     include /_header
     div.uk-container.uk-container-large
-      span 投稿者
-      img(src=`http://192.168.5.18:8000/account/icon/${score_user._id}`,style="width: 80px;")
-      p= score
-      p= score_user
+      div(uk-grid).uk-grid-large
+        div.uk-width-1-4.uk-text-center
+          h3(style="margin-top: 32px;") 投稿者
+          img(src=`/account/icon/${score_user._id}`,style="width: 80%;margin: 0 10% 10%;")
+          div(style="font-size: 18pt;")
+            a(href=`/user/${score_user.id}`)= score_user.username
+          div= `ID: ${score_user.id}`
+        div.uk-width-3-4.uk-padding
+          h2= score.meta.TITLE
+          a.twitter-share-button(href=`https://twitter.com/intent/tweet?text=${score.meta.TITLE} - SSShare #ssshare`, data-size="large") Tweet
+          h3 Description
+          table.uk-table.uk-table-striped
+            tbody
+              tr
+                td ARTIST
+                td= score.meta.ARTIST
+              tr
+                td DESIGNER
+                td= score.meta.DESIGNER
+              tr
+                td DIFFICULTY
+                td(style=`color: ${score.meta.DIFFICULTY.COLOR}; background: ${score.meta.DIFFICULTY.BACKGROUND};`)= score.meta.DIFFICULTY.TEXT
+              if score.meta.DIFFICULTY.LEVEL != 4
+                tr
+                  td PLAYLEVEL
+                  td= score.meta.PLAYLEVEL.TEXT
+              if score.meta.DIFFICULTY.MARK
+                tr
+                  td MARK
+                  td= score.meta.DIFFICULTY.MARK
+              if score.meta.DIFFICULTY.STAR
+                tr
+                  td STAR
+                  td(style="color: #ee5")= Array(score.meta.DIFFICULTY.STAR+1).join('★')
+              tr
+                td BASEBPM
+                td= score.meta.BASEBPM
+          //div= score
+          //div= JSON.stringify(score.meta)
+
     include /_footer

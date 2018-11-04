@@ -36,7 +36,7 @@ module.exports = {
     const token = uniqid()
     let mes = Object.assign({},new_mes)
     mes.to = addr
-    mex.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/register?token=${token}">http://${config.get('server.domain')}/account/register?token=${token}`
+    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}/account/register?token=${token}">http://${config.get('server.domain')}/account/register?token=${token}`
 
     transporter.sendMail(mes,(error, info) => {
       if(error) return console.log(error)
@@ -48,7 +48,7 @@ module.exports = {
     const token = uniqid()
     let mes = Object.assign({},reset_mes)
     mes.to = addr
-    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/reset?token=${token}">http://${config.get('server.domain')}/account/reset?token=${token}`
+    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}/account/reset?token=${token}">http://${config.get('server.domain')}/account/reset?token=${token}`
 
     transporter.sendMail(mes, (error, info) => {
       if(error) return console.log(error)
@@ -60,7 +60,7 @@ module.exports = {
     const token = uniqid()
     let mes = Object.assign({},change_mes)
     mes.to = addr
-    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}:8000/account/change?token=${token}">http://${config.get('server.domain')}/account/change?token=${token}`
+    mes.text = `${mes.text}<br><br><a href="http://${config.get('server.domain')}/account/change?token=${token}">http://${config.get('server.domain')}/account/change?token=${token}`
 
     transporter.sendMail(mes, (error, info) => {
       if(error) return console.log(error)

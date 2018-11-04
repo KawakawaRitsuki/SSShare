@@ -1,4 +1,3 @@
-
 const gulp      = require('gulp'),
   $             = require('gulp-load-plugins')(),
   rimraf        = require('rimraf'),
@@ -6,21 +5,6 @@ const gulp      = require('gulp'),
   fs            = require('fs')
 
 gulp.task('clean', () => rimraf.sync('public/*'))
-
-gulp.task('ts', () => {
-  gulp.src('./*.ts')
-    .pipe($.typescript({
-      "strict": true,
-      "sourceMap": true,
-      "module": "commonjs",
-      "target": "es6",
-      "lib": ["es2018", "dom"],
-      "outDir":"dist",
-      "removeComments": true,
-      "experimentalDecorators": true
-    }))
-    .pipe(gulp.dest('./dist'))
-})
 
 gulp.task('scss', () =>
   gulp.src('./scss/*')
