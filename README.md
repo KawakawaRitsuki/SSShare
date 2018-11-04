@@ -5,8 +5,8 @@ Seaurchin Score Share
 
 ```
 $ yarn # or $ npm i
-$ npx browserify webjs/upload.js -o public/upload.js
 $ npx gulp
+$ npx browserify webjs/upload.js -o public/upload.js
 $ cp config/default.sample.json config/default.json
 $ $EDITOR config/default.json
 $ node index.js
