@@ -1,6 +1,6 @@
 const router = require('express').Router(),
   bcrypt = require('bcrypt'),
-  identicon = require('identicon'),
+  jdenticon = require('jdenticon'),
   fs = require('fs'),
   path = require('path'),
   jimp = require('jimp'),
@@ -10,6 +10,7 @@ const router = require('express').Router(),
   db = require('../mongo').db,
   User = require('../mongo').User
 
+jdenticon.config = { backColor: "#ffffff" }
 const saltRounds = 10
 
 module.exports = passport => {
@@ -43,11 +44,12 @@ module.exports = passport => {
 
     user.username = req.body.username
     user.password = hash
+    user.bio = ""
     user.confirm_token = ""
     user.confirmed = true
 
     const user_saved = await user.save()
-    identicon.generate({ id: user_saved._id.toString(), size: 400 }, (err, buf) => fs.writeFileSync(`./icons/${user_saved._id}.png`, buf))
+    fs.writeFileSync(`./icons/${user_saved._id}.png`, jdenticon.toPng(user_saved._id.toString(), 400))
     res.redirect('/account/registered')
   })
 

@@ -8,21 +8,6 @@ html
       .uk-tab>*>a {
         padding: 9px 20px;
       }
-    script.
-      window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
-          t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-        t._e = [];
-        t.ready = function(f) {
-          t._e.push(f);
-        };
-        return t;
-      }(document, "script", "twitter-wjs"));</script>
   body
     include /_header
     div.uk-container.uk-container-large
@@ -35,7 +20,57 @@ html
           div= `ID: ${score_user.id}`
         div.uk-width-3-4.uk-padding
           h2= score.meta.TITLE
-          a.twitter-share-button(href=`https://twitter.com/intent/tweet?text=${score.meta.TITLE} - SSShare #ssshare`, data-size="large") Tweet
+          div(style="display: flex;")
+            a(href="", style="display: block; background: #FF6; color:#333; text-align: center; width: 128px; padding: 16px;")
+              span(uk-icon="icon: star; ratio: 1.5;")
+              br
+              | Favorite
+            a(href=`https://twitter.com/intent/tweet?text=${score.meta.TITLE}&url=https://sss.mizucoffee.net/score/${score.score_id}&hashtags=SSShare`, target="_brank", style="display: block; background: #1b95e0; color:#FFF; text-align: center; width: 128px; padding: 16px;")
+              span(uk-icon="icon: twitter; ratio: 1.5;")
+              br
+              | Share
+            a(href=`/score/download/${score.score_id}`, style="display: block; background: #555; color: #FFF; text-align: center; width: 128px; padding: 16px;")
+              span(uk-icon="icon: download; ratio: 1.5;")
+              br
+              | Download
+          if user.id === score.user_id
+            div(style="display: flex; margin-top: 8px;")
+              a(href="", style="display: block; background: #2a2; color: #FFF; text-align: center; width: 128px; padding: 16px;")
+                span(uk-icon="icon: pencil; ratio: 1.5;")
+                br
+                | Edit
+              a(href="#delete-modal", style="display: block; background: #f22; color: #FFF; text-align: center; width: 128px; padding: 16px;", uk-toggle="")
+                span(uk-icon="icon: trash; ratio: 1.5;")
+                br
+                | Delete
+              div(uk-modal="")#delete-modal
+                div.uk-modal-dialog.uk-modal-body
+                  h2.uk-modal-title Confirm
+                  p 本当に譜面を削除しますか？
+                  p.uk-text-right
+                    button(type="button").uk-button.uk-button-default.uk-modal-close Cancel
+                    a(type="button", href=`/score/delete/${score.score_id}`).uk-button.uk-button-primary Delete
+
+          if score.youtube_link
+            h3 Movie
+            iframe(src=`https://youtube.com/embed/${score.youtube_link.split('=')[1]}`, style="width: 48vw; height: 27vw;")
+          h3 Score
+          div(style="overflow-x: scroll; width: 100%;")
+            div#score(style=`display: flex; width: ${Math.ceil(measure/3) * 97}px; align-items: flex-end;`).pad
+              - for (let i = 0; i < Math.ceil(measure/3); i++)
+                div(style="margin-right: 4px; width: 93px; height: fit-content;")
+                  - if(i*3+2 < measure)
+                    div(style="width: 93px; margin-left: auto;")
+                      span(style="font-size: 12px; color: #000; text-decoration: underline; padding-right: 2px;")= i*3+3
+                      img(src=`/score/image/${score.score_id}/${i*3+2}`, style="vertical-align: bottom; width: 68px;")
+                  - if(i*3+1 < measure)
+                    div(style="width: 93px; margin-left: auto;")
+                      span(style="font-size: 12px; color: #000; text-decoration: underline; padding-right: 2px;")= i*3+2
+                      img(src=`/score/image/${score.score_id}/${i*3+1}`, style="vertical-align: bottom; width: 68px;")
+                  - if(i*3 < measure)
+                    div(style="width: 93px; margin-left: auto;")
+                      span(style="font-size: 12px; color: #000; text-decoration: underline; padding-right: 2px;")= i*3+1
+                      img(src=`/score/image/${score.score_id}/${i*3}`, style="vertical-align: bottom; width: 68px;")
           h3 Description
           table.uk-table.uk-table-striped
             tbody
@@ -60,10 +95,37 @@ html
                 tr
                   td STAR
                   td(style="color: #ee5")= Array(score.meta.DIFFICULTY.STAR+1).join('★')
-              tr
-                td BASEBPM
-                td= score.meta.BASEBPM
-          //div= score
-          //div= JSON.stringify(score.meta)
+              if score.meta.BASEBPM
+                tr
+                  td BASEBPM
+                  td= score.meta.BASEBPM
+              if score.note
+                tr
+                  td Note
+                  td= score.note
 
+
+          if score.wave.length > 0
+            h3 Wave Offset
+            table.uk-table.uk-table-striped
+              tbody
+                tr
+                  td 入手元
+                  td オフセット値
+                for data in score.wave
+                  tr
+                    td= data.source
+                    td= data.offset
+
+          if score.movie.length > 0
+            h3 Wave Offset
+            table.uk-table.uk-table-striped
+              tbody
+                tr
+                  td 入手元
+                  td オフセット値
+                for data in score.movie
+                  tr
+                    td= data.source
+                    td= data.offset
     include /_footer

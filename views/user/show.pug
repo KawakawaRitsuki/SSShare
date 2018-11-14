@@ -26,7 +26,7 @@ html
               a(href="#") Stars
           ul.uk-switcher.uk-margin
             li
-              table.uk-table.uk-table-striped
+              table.uk-table.uk-table-divider.uk-table-hover
                 thead
                   tr
                     th 曲名
@@ -44,11 +44,15 @@ html
                 tbody
                   each score in page_user.scores
                     tr
-                      td= score.TITLE
+                      td
+                        a(href=`/score/${score.score_id}`)= score.TITLE
                       td= score.ARTIST
                       td= score.DESIGNER
-                      td= score.DIFFICULTY.LEVEL
-                      td= score.PLAYLEVEL
+                      td(style=`background: ${score.DIFFICULTY.BACKGROUND};color: ${score.DIFFICULTY.COLOR};font-weight: 400;`)= score.DIFFICULTY.TEXT
+                      td= score.DIFFICULTY.LEVEL === 4 ? score.DIFFICULTY.MARK || '' : score.PLAYLEVEL.TEXT || ''
+                      td
+                        a(href=`/user/${score.user_id}`)= score.username
+                     
             li
               each star in page_user.star
                 p= score

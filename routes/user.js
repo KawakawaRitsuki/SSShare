@@ -1,10 +1,5 @@
 const router = require('express').Router(),
-  bcrypt = require('bcrypt'),
-  identicon = require('identicon'),
-  fs = require('fs'),
-  mail = require('../mail'),
   Analyzer = require('sus-analyzer'),
-  db = require('../mongo').db,
   User = require('../mongo').User,
   Score = require('../mongo').Score
 
